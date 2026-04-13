@@ -51,4 +51,10 @@ public class UserController {
 
     }
 
+    @GetMapping("/create")
+    public String showForm(HttpSession session) {
+        if (session.getAttribute("isLoggedIn") == null) return "redirect:/";
+        return "form";
+    }
+
 }
