@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.HtmlUtils;
 
 import com.act2.model.User;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -59,16 +63,22 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@RequestParam String id, 
-                           @RequestParam String nama, 
-                           @RequestParam String nim, 
-                           @RequestParam String gender, 
+    public String saveUser(@Valid @ModelAttribute("user") User user, 
+                           BindingResult result, 
                            HttpSession session) {
         
+        if (result.hasErrors()) {
+            return "form";
+        }
+
+        user.setNama(HtmlUtils.htmlEscape(user.getNama().trim()));
+        user.setId(HtmlUtils.htmlEscape(user.getId().trim()));
+        user.setNim(user.getNim().trim());
+
         List<User> userList = (List<User>) session.getAttribute("userList");
         if (userList == null) userList = new ArrayList<>();
 
-        userList.add(new User(id, nama, nim, gender));
+        userList.add(user);
         session.setAttribute("userList", userList);
 
         return "redirect:/home";
