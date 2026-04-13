@@ -3,12 +3,13 @@ package com.act2.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.act2.model.User;
 
 import jakarta.servlet.http.HttpSession;
 
