@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Home - Data Mahasiswa</title>
 </head>
 <body>
-<h1>Login Berhasil 🎉</h1>
-<p>Selamat datang di halaman home!</p>
-
-<a href="/">Logout</a>
+    <h2>Data Mahasiswa (Session Based)</h2>
+    <a href="/create"><button>Tambah Data</button></a>
+    <a href="/logout"><button style="background-color: red; color: white;">Logout</button></a>
+    <hr>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>NIM</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.nama}"></td>
+                <td th:text="${user.nim}"></td>
+                <td th:text="${user.gender}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(users)}">
+                <td colspan="4" style="text-align: center;">Belum ada data.</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
