@@ -1,5 +1,9 @@
 package com.act2.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +40,15 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(HttpSession session, Model model) {
+        if (session.getAttribute("isLoggedIn") == null ) return "home";
+
+        List<User> userList = (List<User>) session.getAttribute("userList");
+        if (userList == null) userList = new ArrayList<>();
+
+        model.addAttribute("users", userList);
         return "home";
+
     }
 
 }
