@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Mahasiswa</title>
+</head>
+<body>
+    <h2>Form Input Mahasiswa</h2>
+    <form action="/save" method="post">
+        ID: <input type="text" name="id" required><br><br>
+        Nama: <input type="text" name="nama" required><br><br>
+        NIM: <input type="text" name="nim" required><br><br>
+        Gender: 
+        <select name="gender" required>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select><br><br>
+        <button type="submit">Simpan ke Session</button>
+        <a href="/home">Batal</a>
+    </form>
+</body>
+</html>
