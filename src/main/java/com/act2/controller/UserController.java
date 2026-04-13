@@ -37,7 +37,7 @@ public class UserController {
         if (username.equals(USERNAME) && password.equals(PASSWORD))
             {
                 session.setAttribute("isLoggedIn", true);
-                return "home";
+                return "redirect:/home";
             } else {
                 model.addAttribute("error","Username atau Password kosong");
                 return "login";
@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
-        if (session.getAttribute("isLoggedIn") == null ) return "home";
+        if (session.getAttribute("isLoggedIn") == null ) return "redirect:/";
 
         List<User> userList = (List<User>) session.getAttribute("userList");
         if (userList == null) userList = new ArrayList<>();
