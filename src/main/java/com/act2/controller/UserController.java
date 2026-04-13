@@ -57,4 +57,26 @@ public class UserController {
         return "form";
     }
 
+    @PostMapping("/save")
+    public String saveUser(@RequestParam String id, 
+                           @RequestParam String nama, 
+                           @RequestParam String nim, 
+                           @RequestParam String gender, 
+                           HttpSession session) {
+        
+        List<User> userList = (List<User>) session.getAttribute("userList");
+        if (userList == null) userList = new ArrayList<>();
+
+        userList.add(new User(id, nama, nim, gender));
+        session.setAttribute("userList", userList);
+
+        return "redirect:/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Hapus semua data session
+        return "redirect:/";
+    }
+
 }
