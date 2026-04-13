@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 
     private final String USERNAME = "admin";
-    private final String PASSWORD = "12345";
+    private final String PASSWORD = "20220140102";
 
     @GetMapping("/")
     public String loginPage() {
