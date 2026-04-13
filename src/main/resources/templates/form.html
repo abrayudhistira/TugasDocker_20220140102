@@ -1,21 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Tambah Mahasiswa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #111 100%);
+            padding: 2rem;
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .glass-title span {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.45);
+            display: block;
+            margin-top: 3px;
+            margin-bottom: 1.5rem;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0 0 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-family: sans-serif;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.11);
+        }
+
+        select option {
+            background: #2d2d2d;
+            color: #fff;
+        }
+
+        .error-msg {
+            display: block;
+            font-size: 12px;
+            color: rgba(255, 100, 100, 0.9);
+            margin-top: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.8rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: sans-serif;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
 </head>
 <body>
-    <h2>Form Input Mahasiswa</h2>
-    <form action="/save" method="post">
-        ID: <input type="text" name="id" required><br><br>
-        Nama: <input type="text" name="nama" required><br><br>
-        NIM: <input type="text" name="nim" required><br><br>
-        Gender: 
-        <select name="gender" required>
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select><br><br>
-        <button type="submit">Simpan ke Session</button>
-        <a href="/home">Batal</a>
-    </form>
+    <div class="glass-card">
+        <div class="glass-title">
+            Form Input Mahasiswa
+            <span>Tambah data mahasiswa baru</span>
+        </div>
+
+        <hr class="divider">
+
+        <form action="/save" method="post" th:object="${user}">
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" th:value="${user?.id}" placeholder="Masukkan ID">
+                <span class="error-msg" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" name="nama" th:value="${user?.nama}" placeholder="Masukkan nama lengkap">
+                <span class="error-msg" th:if="${#fields.hasErrors('nama')}" th:errors="*{nama}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" name="nim" th:value="${user?.nim}" placeholder="Masukkan NIM">
+                <span class="error-msg" th:if="${#fields.hasErrors('nim')}" th:errors="*{nim}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                    <option value="">-- Pilih Gender --</option>
+                    <option value="Laki-laki" th:selected="${user?.gender == 'Laki-laki'}">Laki-laki</option>
+                    <option value="Perempuan" th:selected="${user?.gender == 'Perempuan'}">Perempuan</option>
+                </select>
+                <span class="error-msg" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+            </div>
+
+            <div class="btn-group">
+                <a href="/" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
